@@ -1,81 +1,88 @@
- JavaScript-course
-Certainly! Here's a simple example of a C program that generates a matrix with random numbers and then prints the numbers that are multiples of 3:
-
-```c
+ // C program to multiply 3 matrices using a function
 #include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
+#define N 3 // size of the matrices
 
-#define ROWS 3
-#define COLS 3
+// Function to multiply 3 matrices A, B and C
+void multiply3(int A[N][N], int B[N][N], int C[N][N], int D[N][N])
+{
+    int i, j, k, l; // loop variables
+    int temp[N][N]; // temporary matrix to store the product of A and B
 
-int main() {
-    // Seed for random number generation
-    srand(time(NULL));
-
-    // Initialize a 3x3 matrix with random numbers
-    int matrix[ROWS][COLS];
-    for (int i = 0; i < ROWS; ++i) {
-        for (int j = 0; j < COLS; ++j) {
-            matrix[i][j] = rand() % 100; // You can adjust the range of random numbers if needed
+    // Initialize temp and D matrices to zero
+    for (i = 0; i < N; i++)
+    {
+        for (j = 0; j < N; j++)
+        {
+            temp[i][j] = 0;
+            D[i][j] = 0;
         }
- Matrix Certainly! Below is a simple example of a C program to multiply two matrices:
+    }
 
-```c
-#include <stdio.h>
+    // Multiply A and B matrices and store the result in temp matrix
+    for (i = 0; i < N; i++)
+    {
+        for (j = 0; j < N; j++)
+        {
+            for (k = 0; k < N; k++)
+            {
+                temp[i][j] += A[i][k] * B[k][j];
+            }
+        }
+    }
 
-#define ROWS_A 3
-#define COLS_A 2
-#define ROWS_B 2
-#define COLS_B 4
-
-void multiplyMatrices(int firstMatrix[ROWS_A][COLS_A], int secondMatrix[ROWS_B][COLS_B], int result[ROWS_A][COLS_B]) {
-    for (int i = 0; i < ROWS_A; ++i) {
-        for (int j = 0; j < COLS_B; ++j) {
-            result[i][j] = 0;
-            for (int k = 0; k < COLS_A; ++k) {
-                result[i][j] += firstMatrix[i][k] * secondMatrix[k][j];
+    // Multiply temp and C matrices and store the result in D matrix
+    for (i = 0; i < N; i++)
+    {
+        for (j = 0; j < N; j++)
+        {
+            for (l = 0; l < N; l++)
+            {
+                D[i][j] += temp[i][l] * C[l][j];
             }
         }
     }
 }
 
-void displayMatrix(int matrix[ROWS_A][COLS_B]) {
-    for (int i = 0; i < ROWS_A; ++i) {
-        for (int j = 0; j < COLS_B; ++j) {
-            printf("%d\t", matrix[i][j]);
+// Function to print a matrix
+void printMatrix(int M[N][N])
+{
+    int i, j; // loop variables
+    for (i = 0; i < N; i++)
+    {
+        for (j = 0; j < N; j++)
+        {
+            printf("%d ", M[i][j]);
         }
         printf("\n");
     }
 }
 
-int main() {
-    int firstMatrix[ROWS_A][COLS_A] = {
-        {1, 2},
-        {3, 4},
-        {5, 6}
-    };
+// Main function
+int main()
+{
+    // Declare and initialize 3 matrices
+    int A[N][N] = {{1, 2, 3},
+                   {4, 5, 6},
+                   {7, 8, 9}};
 
-    int secondMatrix[ROWS_B][COLS_B] = {
-        {7, 8, 9, 10},
-        {11, 12, 13, 14}
-    };
+    int B[N][N] = {{10, 11, 12},
+                   {13, 14, 15},
+                   {16, 17, 18}};
 
-    int resultMatrix[ROWS_A][COLS_B];
+    int C[N][N] = {{19, 20, 21},
+                   {22, 23, 24},
+                   {25, 26, 27}};
 
-    multiplyMatrices(firstMatrix, secondMatrix, resultMatrix);
+    int D[N][N]; // matrix to store the product of A, B and C
 
-    printf("First Matrix:\n");
-    displayMatrix(firstMatrix);
+    // Call the function to multiply 3 matrices
+    multiply3(A, B, C, D);
 
-    printf("\nSecond Matrix:\n");
-    displayMatrix(secondMatrix);
-
-    printf("\nResult Matrix:\n");
-    displayMatrix(resultMatrix);
+    // Print the result matrix
+    printf("The product of the 3 matrices is:\n");
+    printMatrix(D);
 
     return 0;
 }
-```
 
-This program defines two matrices, multiplies them, and prints the original matrices along with the result. You can adjust the size and elements of the matrices as needed.
+     
